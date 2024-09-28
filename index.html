@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BeatFlow - Login</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .login-container {
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        width: 350px;
+      }
+
+      .login-container h1 {
+        color: #333;
+      }
+
+      .fb-login-btn {
+        margin-top: 20px;
+        background-color: #4267b2;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        width: 100%;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      .fb-login-btn:hover {
+        background-color: #365899;
+      }
+
+      .or-divider {
+        margin: 20px 0;
+        display: flex;
+        align-items: center;
+      }
+
+      .or-divider hr {
+        flex: 1;
+        border: none;
+        height: 1px;
+        background-color: #ddd;
+      }
+
+      .or-divider span {
+        padding: 0 10px;
+        color: #888;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="login-container">
+      <h1>BeatFlow</h1>
+      <p>Welcome! Please log in to continue.</p>
+
+      <!-- Facebook login button -->
+      <button class="fb-login-btn" onclick="facebookLogin()">
+        Login with Facebook
+      </button>
+
+      <div class="or-divider">
+        <hr />
+        <span>OR</span>
+        <hr />
+      </div>
+
+      <!-- Regular login form -->
+      <form>
+        <input
+          type="text"
+          name="email"
+          placeholder="Email"
+          required
+        /><br /><br />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          required
+        /><br /><br />
+        <button
+          type="submit"
+          class="fb-login-btn"
+          style="background-color: #28a745"
+        >
+          Login
+        </button>
+      </form>
+    </div>
+
+    <!-- Include Facebook SDK -->
+    <script
+      async
+      defer
+      crossorigin="anonymous"
+      src="https://connect.facebook.net/en_US/sdk.js"
+    ></script>
+
+    <script>
+      // Initialize Facebook SDK
+      window.fbAsyncInit = function () {
+        FB.init({
+          appId: "YOUR_APP_ID", // Replace with your Facebook App ID
+          cookie: true,
+          xfbml: true,
+          version: "v16.0",
+        });
+        FB.AppEvents.logPageView();
+      };
+
+      // Facebook login function
+      function facebookLogin() {
+        FB.login(
+          function (response) {
+            if (response.authResponse) {
+              console.log("Welcome! Fetching your information...");
+              FB.api("/me", function (response) {
+                console.log("Good to see you, " + response.name + ".");
+                // Redirect or perform actions after successful login
+              });
+            } else {
+              console.log("User cancelled login or did not fully authorize.");
+            }
+          },
+          {
+            scope: "email",
+          }
+        );
+      }
+    </script>
+  </body>
+</html>
